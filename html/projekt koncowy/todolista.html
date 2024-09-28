@@ -1,29 +1,140 @@
 <!DOCTYPE html>
-<html>
-    <head>
-      
-        <meta charset="UTF-8">
-        <title>To-Do Lista</title>
-    </head>
+<html lang="en">
 
-    <body>    
+<head>
+    <meta charset="UTF-8">
+    <title>Chcę zrobić</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bungee+Spice&display=swap" rel="stylesheet">
 
-        <h2>Co chcę zrobić</h2>
-        <input type = "text" id ="taskInput" placeholder ="wpisz nowe zadanie">
-        <button onclick="addTask()">Dodaj zadanie</button>
-        <ul id="taskList"></ul>
-        
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #fefcf3;
+            color: #333;
+            text-align: center;
+            margin: 20px;
+        }
+
+        h1 {
+            font-size: 36p;
+            font-family: "Bungee Spice", sans-serif;
+            font-weight: 400;
+            font-style: normal;
+        }
 
 
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        li {
+            padding: 10px;
+            font-size: 18px;
+            border: 1px solid #ccc;
+            margin-bottom: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: rgb(255, 210, 217);
+        }
+
+        li.completed {
+            background-color: #ccc;
+            text-decoration: line-through;
+        }
+
+        button {
+            padding: 5px 10px;
+            margin-left: 10px;
+        }
+
+        input[type="text"] {
+            padding: 5px;
+            font-size: 16px;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Chcę zrobić</h1>
+
+    <div id="date">
+        <label for="dateInput">Date:</label>
+        <input type="date" id="dateInput">
+
+    </div>
+    <div class="Chcęzrobić-section">
+        <h2>Koniecznie</h2>
+        <ul id="KoniecznieList"></ul>
+        <input type="text" id="KoniecznieInput" placeholder="Add task">
+        <button onclick="addTask('Koniecznie')">Add Task</button>
 
 
+    </div>
+    <div class="Chcęzrobić-section">
+        <h2>Ważne</h2>
+        <ul id="WażneList"></ul>
+        <input type="text" id="WażneInput" placeholder="Add task">
+        <button onclick="addTask('Ważne')">Add Task</button>
+    </div>
 
+    <div class="Chcęzrobić-section">
+        <h2>Mogłabym</h2>
+        <ul id="MogłabymList"></ul>
+        <input type="text" id="MogłabymInput" placeholder="Add task">
+        <button onclick="addTask('Mogłabym')">Add Task</button>
+    </div>
 
+    <div class="Chcęzrobić-section">
+        <h2>If I Have Time</h2>
+        <ul id="ifTimeList"></ul>
+        <input type="text" id="ifTimeInput" placeholder="Add task">
+        <button onclick="addTask('ifTime')">Add Task</button>
+    </div>
 
-        <script>
-        
+    <script>
 
+        function addTask(listName) {
+            const inputField = document.getElementById(`${listName}Input`);
+            const taskText = inputField.value.trim();
 
-        </script>
-    </body>
+            if (taskText === '') {
+                alert("Task cannot be empty");
+                return;
+            }
+
+            const ul = document.getElementById(`${listName}List`);
+            const li = document.createElement('li');
+
+            // Tworzę checkbox do zaznaczania zadania
+            const checkbox = document.createElement('input');
+            checkbox.type = 'checkbox';
+            checkbox.onchange = function () {
+                li.classList.toggle('completed', this.checked);
+            };
+
+            // Dodaję tekst zadania
+            const taskTextNode = document.createTextNode(taskText);
+
+            // Tworzę przycisk do usunięcia zadania
+            const removeButton = document.createElement('button');
+            removeButton.textContent = 'Remove';
+            removeButton.onclick = function () {
+                ul.removeChild(li);
+            };
+
+            li.appendChild(checkbox);
+            li.appendChild(taskTextNode);
+            li.appendChild(removeButton);
+            ul.appendChild(li);
+
+            // Czyści pole po dodaniu zadania
+            inputField.value = '';
+        }
+    </script>
+</body>
+
 </html>
